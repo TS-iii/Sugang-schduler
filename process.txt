@@ -34,6 +34,14 @@ WritePage.js    // 시간표 작성 화면
 mainPage.js // 메인 화면
  파일 생성
 
-5.
+5. router 간단히 구성
+uri ~/write 치면 WritePage.js가 나오게
+기본은 mainPage.js
+결과는 GraphPage.js
+
+
+6. 
+
+
 
 
