@@ -1,0 +1,39 @@
+
+과정
+
+1. >> yarn create react-app sugang-frontend  react 프로젝트 생성
+2. >> yarn add react-router-dom     프로젝트에 라우터 적용
+3.폴더에 
+jsconfig.json 파일 생성
+{
+
+    "compilerOptions":{
+        "target":"es6"
+    }
+
+}
+
+폴더에
+.prettierrc 파일 생성
+
+{
+
+    "singleQuote":true,
+    "semi":true,
+    "useTabs":false,
+    "tabWidth":2,
+    "trailingComma":"all",
+    "printWidth":80
+}
+
+
+4. pages 폴더 생성
+src/pages 디렉토리에 
+GraphPage.js    // 결과 출력 화면
+WritePage.js    // 시간표 작성 화면
+mainPage.js // 메인 화면
+ 파일 생성
+
+5.
+
+
