@@ -1,13 +1,13 @@
 import React from 'react';
 
+import MainTemplate from '../component/main/MainTemplate';
 
 
-
-const mainPage=()=>{
+const MainPage=()=>{
 
     return (
 
-        <div>메인 페이지</div>
+        <MainTemplate></MainTemplate>
 
     );
 
@@ -15,5 +15,5 @@ const mainPage=()=>{
 };
 
 
-export default mainPage;
+export default MainPage;
 
