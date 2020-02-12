@@ -1,14 +1,13 @@
 import React from 'react';
 import Button from '../component/common/Button';
-
+import WriteSchedule from '../component/write/WriteSchedule';
 
 
 const WritePage=()=>{
 
     return (
 
-        // <div>목록 작성하는 페이지</div>
-        <Button>버튼</Button>
+        <WriteSchedule></WriteSchedule>
     );
 
 

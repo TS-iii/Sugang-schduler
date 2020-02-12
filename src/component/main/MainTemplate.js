@@ -90,10 +90,8 @@ border-right:1px solid black;
 
 `;
 
-//수강신청 스케줄러
-//시간표 짜기
-//결과 보기
-const MainTemplate=({children})=>{
+
+const MainTemplate=({scheduler,result})=>{
 
 
     return (
@@ -107,8 +105,8 @@ const MainTemplate=({children})=>{
 
             <StyleButtonTemplate>
         
-            <StyledButton>시간표 짜기</StyledButton>
-            <StyledButton>결과 보기</StyledButton>
+            <StyledButton onClick={scheduler}>시간표 짜기</StyledButton>
+            <StyledButton onClick={result}>결과 보기</StyledButton>
 
             </StyleButtonTemplate>
             
