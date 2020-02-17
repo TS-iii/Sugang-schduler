@@ -157,11 +157,13 @@ const WriteContainer=({history})=>{
      let finalTable=[];
 
 // 1번 순회함.
-const composeTree=function(){
+const composeTree=function(t){
 
   
     const root= new Node();
-    
+
+    if(t==='type1')
+        {
     //루트 바로 밑 1번째 자식들 구성
     for(let i=0;i<type1.length;i++){
 
@@ -181,7 +183,53 @@ const composeTree=function(){
         search(root.children[i],1);
        
     }
+        }
 
+    else if(t==='type2'){
+
+        for(let i=0;i<type2.length;i++){
+
+            // let node= new Node(type1[i]);
+    
+            root.insert(type2[i]);
+    
+       
+          
+        }
+    
+    
+    
+    
+        for(let i=0;i<type2.length;i++){
+    
+            search(root.children[i],1);
+           
+        }
+
+
+
+    }
+
+    else if(t==='type3'){
+
+        for(let i=0;i<type3.length;i++){
+
+            // let node= new Node(type1[i]);
+    
+            root.insert(type3[i]);
+    
+       
+          
+        }
+    
+        for(let i=0;i<type3.length;i++){
+    
+            search(root.children[i],1);
+           
+        }
+
+
+    }
     
 
 return root;
@@ -195,12 +243,15 @@ const search=function(n,k){
 
     for(let i=n.num+1;i<n.adault.children.length;i++){
 
+            if(n.data.classname!==n.adault.children[i].data.classname){
+
             if(lookschedule(n.data.classtime,n.adault.children[i].data.classtime))
                 {
                     n.insert(n.adault.children[i].data);
                     num++;
 
                 }
+            }
                    
     };
 
@@ -246,7 +297,7 @@ const onCalculate=()=>{
 
 
 
-   composeTree();
+   composeTree('type1');
    
    for(let i=0;i<finalTable.length;i++)
    {
@@ -254,8 +305,9 @@ const onCalculate=()=>{
 
        console.log('--------%d번째 시간표----------',i+1);
         for(let j=0;j<max;j++)
-        {
-            console.log('%d:%s ',j+1 ,n.data.classname);
+        {   
+           
+            console.log('%d:%s %s ',j+1 ,n.data.classname,n.data.profess);
             n=n.adault;
 
         }
