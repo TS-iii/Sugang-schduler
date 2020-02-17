@@ -1,6 +1,7 @@
-import React ,{useState,useCallback} from 'react';
+import React ,{useState,useCallback, useEffect} from 'react';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
+import  Graph from  "../graph/Graph";
 
 
 
@@ -154,7 +155,8 @@ const DataList=React.memo(({dataes,onRemove})=>(
 }
   
  
-    
+
+
     
     </DataBlock>
 
@@ -175,7 +177,7 @@ outline:none
 
 
 button{
-
+    width:100px;
     cursor:pointer;
     font-weight:bold;
     color:white;
@@ -197,9 +199,10 @@ const DataItem=React.memo(({data,onRemove})=>(
 const Data=styled.div`
 
 
+
 `;
 
-const WriteSchedule=()=>{
+const WriteSchedule=({onFinal,onCalculate})=>{
     
     const [localData,setLocalData] = useState([]);
     const [input,setInput]=useState('');
@@ -229,10 +232,164 @@ const WriteSchedule=()=>{
 
     const onRemove=useCallback(
         data=>{
-            setLocalData(localData.filter(d=>d!==data));
+            setLocalData(localData.filter(d=>d!==data));  
         },[localData,]);
 
 
+    const onResult=()=>{
+
+            // localData 는 문자열 저장된 배열
+            
+            //학점은 1에서 6까지 있는걸로
+    
+
+            localData.forEach(e=>{
+
+                  //중요도/과목명/시간/교수이름/학점
+                let splitData=e.split('/');
+                let imp=splitData[0].trim();    //중요도
+                let classname=splitData[1].trim();  // 과목명  
+                let classtime=splitData[2].trim();  //시간
+                let profess=splitData[3].trim();    // 교수이름
+                let classscore=(splitData[4].trim())*1; //학점 , 숫자로 형변환
+
+                // let totalInfo={
+                //     imp,classname,classtime,profess,classscore
+                // }
+                
+                                    let schedule={
+
+                                        keyword:[],
+                                        t1:[],
+                                        t2:[],
+                                        t3:[],
+                                        t4:[],
+                                        t5:[]
+
+                                    };
+
+                                    let n=-1;
+                                    let t=null;
+
+                        for(let i=0;i<classtime.length;i++){
+                                    
+                                        if(n===3)       
+                                            {
+                                                n=2;
+                                                continue;
+                                            }
+                                        
+                                        if(n===2)
+                                            {
+                                                n=-1;
+                                                continue;
+                                            }
+
+                                        if(classtime[i]===' ')
+                                            continue;
+
+                                        switch(classtime[i]){
+
+                                            case '월':
+                                                t='t1';
+                                                schedule.keyword.push(t);
+                                                break;
+                                            case '화':
+                                                t='t2';
+                                                schedule.keyword.push(t);
+                                                break;
+                                            case '수':
+                                                t='t3';
+                                                schedule.keyword.push(t);
+                                                break;
+                                            case '목':
+                                                t='t4';
+                                                schedule.keyword.push(t);
+                                                break;
+                                            case '금':
+                                                t='t5';
+                                                schedule.keyword.push(t);
+                                                break;    
+                                            
+                                            default:
+                                                break;
+                                        
+                                        }
+
+                                        if(classtime[i]>='A' && classtime[i]<='J')
+                                            {   let b=classtime[i].charCodeAt(0)-65;
+                                                b=(b+1)*3;
+
+                                                schedule[t].push(b-1);
+                                                schedule[t].push(b);
+                                                schedule[t].push(b+1);
+
+                                                continue;
+                                            }
+
+                                        else if(classtime[i]>='1' && classtime[i]<='9')
+                                            {   
+                                                
+                                                if(classtime[i+1]>='0' && classtime[i+1]<='9')
+                                                    {
+                                                        n=1;
+                                                        continue;
+                                                    }
+                                                else if(n===1)
+                                                    {
+                                                        let b=20+(classtime[i]-'0');
+                                                        n=-1;
+
+                                                        if(classtime[i+1]==='.')
+                                                            {
+                                                                n=3;
+                                                                schedule[t].push(b+1);
+                                                            }
+                                                        else
+                                                            schedule[t].push(b);
+                                                    
+                                                    }
+
+                                                else {
+
+                                                    if(classtime[i+1]==='.')
+                                                        {  n=3;
+                                                            schedule[t].push(((classtime[i]-'0')*2)+1);
+                                                            }
+                                                    else
+                                                        schedule[t].push((classtime[i]-'0')*2);
+                                                }
+
+                                            }
+
+                                        
+                                        
+
+
+                            }//for문 끝  (시간표를 변환해주는 로직)
+
+
+                classtime=schedule;
+
+                onFinal({   imp,classname,classtime,profess,classscore  });
+                
+            
+            }) // 현재 LocalData에 있는 원소 각각에 대해 이 함수 실행 
+            
+            
+        //   onCalculate();
+
+            // onCalculate(); // 상태값을 읽어들임 
+            
+            
+            
+            
+            // return <Graph props={localData} />
+    
+        };  // onresult 끝
+    
+
+     
 
     return(
 
@@ -274,14 +431,11 @@ const WriteSchedule=()=>{
 
                 <h2>현재 신청 리스트</h2>
                 
-
                 <DataList dataes={localData} onRemove={onRemove} />
                 
-                <button>결과 보기</button>
+                <button onClick={onResult}>결과 보기</button>
 
             </ListTemplate>
-
-             
 
 
         </ContentBody>
@@ -378,6 +532,36 @@ export delete = function(a){
 
 
 }
+
+
+
+
+-----------------------------------
+
+        
+    const onResult=()=>{
+
+        // localData 는 문자열 저장된 배열
+        
+        //학점은 1에서 6까지 있는걸로
+
+        let splitData=localData.split('/'); 
+        //중요도/과목명/시간/교수이름/학점
+                
+        let imp=splitData[0].trim(); // 1~3 앞뒤 공백 제거
+        let classname=splitData[1].trim();
+
+        let classtime=splitData[2].trim();
+        
+
+        let profess=splitData[3].trim();
+        let classScore=splitData[4].trim(); // 1~6학점
+        
+              
+            return <Graph props={localData} />
+
+    };
+
 
 
 
