@@ -202,7 +202,7 @@ const Data=styled.div`
 
 `;
 
-const WriteSchedule=({onFinal,onCalculate})=>{
+const WriteSchedule=({onFinal})=>{
     
     const [localData,setLocalData] = useState([]);
     const [input,setInput]=useState('');
