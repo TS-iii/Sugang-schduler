@@ -10,7 +10,7 @@ function App() {
   return (
     <>
     <Route component={WritePage} path="/write"  />
-    <Route component={MainPage} path="/main" />
+    <Route component={MainPage} path={["/main","/"]} exact/>
     <Route component={GraphPage} path="/graph" />
 
     </>

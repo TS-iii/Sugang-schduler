@@ -2,12 +2,13 @@ import React from 'react';
 
 
 
+import GraphContainer from '../containers/graph/GraphContainer';
 
 const GraphPage=()=>{
 
     return (
 
-        <div>결과를 보여주는 페이지</div>
+        <GraphContainer></GraphContainer>
 
     );
 

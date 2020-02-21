@@ -8,6 +8,8 @@ export class Node {
         this.data=data;
         this.children=[];
         this.adault=null;
+        this.score=0;
+        this.maxrootlist=[];
     
     }
 
@@ -16,10 +18,14 @@ export class Node {
 
     const node=new Node(data);
     node.adault=this;
-  
+    
+    node.score=node.adault.score+data.classscore;  // 누적 학점
+
     this.children.push(node);
     node.num=this.children.length-1;
 
+  
+    
    }
    
 
@@ -133,20 +139,23 @@ export const insertTable=function(dst,src){
 };
 
 
-export const composeTree=function(t,table){
+export const composeTree=function(t,table,banlist){
 
   
     const root= new Node();
 
     root.max=0;
+    root.maxScore=0;
+
     root.finalTable=[];
+
 
     if(t==='type1')
         {
     //루트 바로 밑 1번째 자식들 구성
     for(let i=0;i<table.type1.length;i++){
 
-        // let node= new Node(type1[i]);
+      
 
         root.insert(table.type1[i]);
 
@@ -162,24 +171,53 @@ export const composeTree=function(t,table){
         search(root.children[i],1,root);
        
     }
+
+
         }
 
     else if(t==='type2'){
 
+      
+        
         for(let i=0;i<table.type2.length;i++){
+            
+            if(banlist.length===0)
+                root.insert(table.type2[i]);
+            
+            else {
+                let t=0;
+              
+                for( let j=0;j<banlist.length;j++){
 
-            // let node= new Node(type1[i]);
-    
-            root.insert(table.type2[i]);
+                    if(banlist[j].data.classname!==table.type2[i].classname)
+                    {
+                        if(lookschedule(banlist[j].data.classtime,table.type2[i].classtime))
+                           {
+                                t++;
+
+                           }
+                        
+
+                    }
+
+
+                }
+
+                if(t===banlist.length)
+                    root.insert(table.type2[i]);
+
+              
+
+
+            }
     
        
-          
         }
     
+   
     
     
-    
-        for(let i=0;i<table.type2.length;i++){
+        for(let i=0;i<root.children.length;i++){
     
             search(root.children[i],1,root);
            
@@ -193,15 +231,44 @@ export const composeTree=function(t,table){
 
         for(let i=0;i<table.type3.length;i++){
 
-            // let node= new Node(type1[i]);
     
+            if(banlist.length===0)
             root.insert(table.type3[i]);
+        
+        else {
+            let t=0;
+          
+            for( let j=0;j<banlist.length;j++){
+
+                if(banlist[j].data.classname!==table.type3[i].classname)
+                {
+                    if(lookschedule(banlist[j].data.classtime,table.type3[i].classtime))
+                       {
+                            t++;
+
+                       }
+                    
+
+                }
+
+
+            }
+
+            if(t===banlist.length)
+                root.insert(table.type3[i]);
+
+          
+
+
+        }
     
        
           
         }
     
-        for(let i=0;i<table.type3.length;i++){
+
+
+        for(let i=0;i<root.children.length;i++){
     
             search(root.children[i],1,root);
            
@@ -210,6 +277,19 @@ export const composeTree=function(t,table){
 
     }
     
+
+    for(let i=0;i<root.finalTable.length;i++){
+
+            
+        let n=root.finalTable[i];
+
+        if(n.deep===root.max){
+
+            root.maxrootlist.push(n);
+        }
+
+    }
+ 
 
 return root;
 
@@ -222,10 +302,13 @@ export const search=function(n,k,root){
 
     for(let i=n.num+1;i<n.adault.children.length;i++){
 
+        
+
             if(n.data.classname!==n.adault.children[i].data.classname){
 
             if(lookschedule(n.data.classtime,n.adault.children[i].data.classtime))
-                {
+                {   
+                    
                     n.insert(n.adault.children[i].data);
                     num++;
 
@@ -238,24 +321,32 @@ export const search=function(n,k,root){
 
     if(num===0)      //지금 이 노드가 leaf라는 소리
         {   
-        
             if(root.max<k)
-            {
                 root.max=k;
-                
-                root.finalTable=[];
-                root.finalTable.push(n);
+            
+            if(root.maxScore<n.score)
+                root.maxScore=n.score;
 
-               
+
+            n.deep=k;
+
+
+            // 리프는 root->자기로 향하는 노드들의 리스트를 따로 저장함.
+            n.list=[];
+            let tempn=n;
+            for(let j=0;j<n.deep;j++){
+
+                n.list.push(tempn);
+                tempn=tempn.adault;
+
 
             }
 
-            else if (root.max===k)
-            {
-                    root.finalTable.push(n);
-                 
-            }
+            root.finalTable.push(n);
+
+
             return;
+
         }
     else {
 

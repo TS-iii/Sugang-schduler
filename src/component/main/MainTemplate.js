@@ -4,6 +4,7 @@ import React from 'react';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 import Button from '../common/Button';
+import {Link} from 'react-router-dom';
 
 const BackTemplate= styled.div`
 
@@ -91,7 +92,7 @@ border-right:1px solid black;
 `;
 
 
-const MainTemplate=({scheduler,result})=>{
+const MainTemplate=()=>{
 
 
     return (
@@ -105,8 +106,8 @@ const MainTemplate=({scheduler,result})=>{
 
             <StyleButtonTemplate>
         
-            <StyledButton onClick={scheduler}>시간표 짜기</StyledButton>
-            <StyledButton onClick={result}>결과 보기</StyledButton>
+         <Link to="/write" ><StyledButton>시간표 짜기</StyledButton></Link>
+           <Link to="/graph"><StyledButton >결과 보기</StyledButton></Link> 
 
             </StyleButtonTemplate>
             

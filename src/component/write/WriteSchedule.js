@@ -1,7 +1,7 @@
 import React ,{useState,useCallback, useEffect} from 'react';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
-import  Graph from  "../graph/Graph";
+import {Link} from 'react-router-dom';
 
 
 
@@ -118,8 +118,6 @@ button{
     background:${palette.gray[9]};
     cursor:pointer;
 
-    
-
 }
 
 
@@ -202,7 +200,7 @@ const Data=styled.div`
 
 `;
 
-const WriteSchedule=({onFinal})=>{
+const WriteSchedule=({onFinal,onCalculate})=>{
     
     const [localData,setLocalData] = useState([]);
     const [input,setInput]=useState('');
@@ -239,10 +237,13 @@ const WriteSchedule=({onFinal})=>{
     const onResult=()=>{
 
             // localData 는 문자열 저장된 배열
-            
-            //학점은 1에서 6까지 있는걸로
-    
+            // let table={type1:[],type2:[],type3:[]};
 
+            
+          
+        
+       
+            //학점은 1에서 6까지 있는걸로
             localData.forEach(e=>{
 
                   //중요도/과목명/시간/교수이름/학점
@@ -371,16 +372,29 @@ const WriteSchedule=({onFinal})=>{
 
                 classtime=schedule;
 
-                onFinal({   imp,classname,classtime,profess,classscore  });
+              
                 
+                
+            let type;
+
+            if(imp==='1')
+                type='type1';
+            else if(imp==='2')
+                type='type2';
+            else if(imp==='3')
+                type='type3';
+    
+                onFinal({   type,classname,classtime,profess,classscore  });
+            
+            // table[type].push({classname,classtime,profess,classscore});
+
+
             
             }) // 현재 LocalData에 있는 원소 각각에 대해 이 함수 실행 
             
             
-        //   onCalculate();
-
-            // onCalculate(); // 상태값을 읽어들임 
-            
+           onCalculate();
+        // onCalculate(); // 상태값을 읽어들임 
             
             
             
@@ -400,6 +414,16 @@ const WriteSchedule=({onFinal})=>{
         <WriteList>
                 
             <div className="explain">
+                -------------------------------------<br/>
+                 1/전자장론/월A 수A/박용배/3<br/>
+                1/알고리즘/화E 금E/위규범/ 3<br/>
+                1/알고리즘/월D 목D/위규범/ 3<br/>
+                1/오픈소스SW입문/금 5.5 6.5 7.5 /안병헌/ 3<br/>
+                1 /도메인분석 및 sw설계 / 월B 목B/ 이정태 / 4<br/>
+                1 /도메인분석 및 sw설계 / 월D 목D/이정태/  4<br/>
+
+                1 /창의소프트웨어입문 /월B 목B/이환용/  1<br/>
+                -------------------------------------<br/><br/><br/>
             중요도/과목명/시간/교수이름/학점 으로 입력 <br/>
            **************************************************************<br/>
             중요도: 1,2,3 <br/>
