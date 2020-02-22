@@ -244,9 +244,18 @@ const DrawPosition=({x,y,ycolor,color,text})=>(
 //뒤로가기 -> 그냥 뒤로감
 
 
+const BottomList=styled.div`
+
+position:absolute;
+
+bottom:200px;
 
 
-const Graph=({onCalculate,TdrawList,Delete,makingdrawList,Calculate,next,previous})=>{
+
+
+`;
+
+const Graph=({onCalculate,TdrawList,Delete,makingdrawList,Calculate,next,previous,addlist,Add})=>{
 
 
 
@@ -268,6 +277,27 @@ const Graph=({onCalculate,TdrawList,Delete,makingdrawList,Calculate,next,previou
         </ListDelete>
         
         </OneList>))}
+        
+        <BottomList>
+        <div>---------신청 가능한 목록들-------</div>
+        {   
+            
+            addlist.map((n)=>(
+
+                <OneList>
+                    <ListName>{`${n.data.classname} ${n.data.profess} `}</ListName>
+                    <ListDelete onClick={()=>{Add(n.id)}}>신청</ListDelete>
+                </OneList>
+
+
+            ))
+
+
+
+
+        }
+        
+        </BottomList>
 
 
         </ListTemplate>

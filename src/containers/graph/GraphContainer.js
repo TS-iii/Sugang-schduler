@@ -50,16 +50,162 @@ const GraphContainer=()=>{
 
     const [nownum,setnownum]=useState(0);
 
+    const [addlist,setaddlist]=useState([]);
+
+
     const Delete=(id)=>{
 
        const  aa=TdrawList.filter(e=>(e.id!==id));
-       
+
+
+       for(let i=0;i<aa.length;i++){
+
+        aa.id=i;
+
+       }
+
        setTdrawList(aa);
+
+       let addtemp=[];
+       let addid=0;
+      
+
+       for(let j=0;j<type1.length;j++){
+
+        let i=0;
+        for(i=0;i<aa.length;i++)
+        {
+        if(aa[i].data.classname===type1[j].classname)
+                    break;
+        if(!lookschedule(aa[i].data.classtime,type1[j].classtime))
+                break;
+                
+
+
+        }
+
+        if(i===aa.length){
+            addtemp.push({data:type1[j] ,id:addid});
+            addid++;
+
+        }
+
+
+
+        }
+
+
+
+
+       
+        for(let j=0;j<type2.length;j++){
+
+            let i=0;
+            for(i=0;i<aa.length;i++)
+            {
+            if(aa[i].data.classname===type2[j].classname)
+                        break;
+            if(!lookschedule(aa[i].data.classtime,type2[j].classtime))
+                    break;
+                    
+    
+    
+            }
+    
+            if(i===aa.length){
+                addtemp.push({data:type2[j] ,id:addid});
+                addid++;
+    
+            }
+    
+    
+    
+            }
+
+
+            for(let j=0;j<type3.length;j++){
+
+                let i=0;
+                for(i=0;i<aa.length;i++)
+                {
+                if(aa[i].data.classname===type3[j].classname)
+                            break;
+                if(!lookschedule(aa[i].data.classtime,type3[j].classtime))
+                        break;
+                        
+        
+        
+                }
+        
+                if(i===aa.length){
+                    addtemp.push({data:type3[j] ,id:addid});
+                    addid++;
+        
+                }
+        
+        
+        
+                }
+
+
+
+    
+        
+        console.log('aaaaaa');
+        console.log(aa);
+        console.log(addtemp);
+        setaddlist(addtemp);
           
       };
+
+      
+      const Add=(id)=>{
+
+        let nid=TdrawList.length;
+
+        let aa=[];
+        if(TdrawList.length!==0)
+             aa=[...TdrawList,{id:nid, data:addlist[id].data}];
+        else
+            aa.push({id:nid,data:addlist[id].data});
+
+
+
+        let temp;
+        let bb=[];
+        for(let i=0;i<addlist.length;i++){
+
+            if(addlist[i].id===id)
+                {
+                    temp=addlist[i];
+                    break;
+                }
+
+        }
+
+        for(let i=0;i<addlist.length;i++){
+            
+            if(addlist[i].data.classname!==temp.data.classname){
+                if(lookschedule(addlist[i].data.classtime,temp.data.classtime))
+                    bb.push({...addlist[i],id:bb.length});
+
+
+            }
+
+
+        }
+       
+        console.log('bbbbbbbbb');
+        console.log(bb);
+        console.log(aa);
+        setaddlist(bb);
+        setTdrawList(aa);
+
+
+      };
+    
       
       
-      useEffect(()=>{},TdrawList);
     
 
     // const dispatch = useDispatch();
@@ -263,15 +409,8 @@ useEffect(()=>finalprint(),[allList]);
 
 
                     }
-
-
-
                 }
                 
-
-
-
-
             }
 
 
@@ -329,23 +468,11 @@ useEffect(()=>finalprint(),[allList]);
 
         }
         
-        //return treerootlist;
-        
-        //이부분 고쳐야함
-        setallList(finaldata);
-
-        
-      
-
-    //    makingDrawList();
-
+    
        
-        //console.log(treerootlist);
-
+        setallList(finaldata);
+    
         return finaldata;
-
-
-
     }
 
     const finalprint=()=>{
@@ -539,6 +666,8 @@ useEffect(()=>finalprint(),[allList]);
             Calculate={Calculate}
             next={next}
             previous={previous}
+            Add={Add}
+            addlist={addlist}
             >
 
             </Graph>
