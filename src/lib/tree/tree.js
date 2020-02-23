@@ -37,12 +37,11 @@ export class Node {
 
 //둘의 시간이 겹치는지 확인
 //안겹치면 true 반환
+// 시간표를 넘겨줘야함
 export const lookschedule= function(a,b){
 
-    if(a.t1.length)
+    if(a.t1.length && b.t1.length)
         {   
-            if(b.t1.length)
-            {
                 for(let i=0;i<a.t1.length;i++){
                     
                     if(b.t1.indexOf(a.t1[i])!==-1)
@@ -50,67 +49,47 @@ export const lookschedule= function(a,b){
                         
                 }
 
-            }
-
         }
 
-    if(a.t2.length)
+    if(a.t2.length && b.t2.length)
     {   
-        if(b.t2.length)
-        {
             for(let i=0;i<a.t2.length;i++){
                 
                 if(b.t2.indexOf(a.t2[i])!==-1)
                     return false;
                     
             }
-
-        }
-
     }
 
-    if(a.t3.length)
+    if(a.t3.length && b.t3.length)
     {   
-        if(b.t3.length)
-        {
             for(let i=0;i<a.t3.length;i++){
                 
                 if(b.t3.indexOf(a.t3[i])!==-1)
                     return false;
                     
             }
-
-        }
-
     }
 
-    if(a.t4.length)
+    if(a.t4.length && b.t4.length)
     {   
-        if(b.t4.length)
-        {
             for(let i=0;i<a.t4.length;i++){
                 
                 if(b.t4.indexOf(a.t4[i])!==-1)
                     return false;
-                    
+                 
             }
-
-        }
 
     }
 
-    if(a.t5.length)
+    if(a.t5.length && b.t5.length)
     {   
-        if(b.t5.length)
-        {
             for(let i=0;i<a.t5.length;i++){
                 
                 if(b.t5.indexOf(a.t5[i])!==-1)
                     return false;
-                    
+                   
             }
-
-        }
 
     }
 
@@ -155,15 +134,9 @@ export const composeTree=function(t,table,banlist){
     //루트 바로 밑 1번째 자식들 구성
     for(let i=0;i<table.type1.length;i++){
 
-      
-
         root.insert(table.type1[i]);
-
-   
       
     }
-
-
 
 
     for(let i=0;i<table.type1.length;i++){

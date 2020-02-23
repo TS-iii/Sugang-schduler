@@ -42,50 +42,72 @@ class mNode{
 const GraphContainer=()=>{
 
 
-    const [TdrawList,setTdrawList]=useState([]);
 
-    const [allList,setallList]=useState([]);
+    //TdrawList랑 addlist id는 배열의 인덱스랑 같음 
+    const [TdrawList,setTdrawList]=useState([]);    // 현재 신청된 목록들  (/graph 상단 목록에 영향)
+    //{data: , id: }
+    const [addlist,setaddlist]=useState([]);    // 현재 추가 가능한 목록들 (/graph 하단 목록에 영향 )
+    // {data: id: }
 
-    const [makingdrawList,setmakingdrawList]=useState([]);
+    const [makingdrawList,setmakingdrawList]=useState([]); // 현재 신청된 목록의 시간표 좌표 구현
 
-    const [nownum,setnownum]=useState(0);
+    const [allList,setallList]=useState([]);    
 
-    const [addlist,setaddlist]=useState([]);
+    const [nownum,setnownum]=useState(0);   
+
+    
+
+    // 대안 루트 (id)는 실패했을 경우 
+    const NextRoot=(id)=>{
+        
+        
+
+        
 
 
+
+
+
+    };
+
+
+
+    // 현재 시간표에서 삭제 버튼 클릭시 함수 호출 
     const Delete=(id)=>{
 
-       const  aa=TdrawList.filter(e=>(e.id!==id));
+       const aa=TdrawList.filter(e=>(e.id!==id));  // 일단 삭제할 id찾아서 지운배열을 aa에 전달
 
 
+       // id는 0부터 시작~ 시간표 개수-1만큼 
        for(let i=0;i<aa.length;i++){
 
-        aa.id=i;
+        aa[i].id=i;
 
-       }
+       }    // id 다시 수정
 
-       setTdrawList(aa);
+       setTdrawList(aa);    // 그리고 TdrawList에 적용
 
-       let addtemp=[];
-       let addid=0;
+       let addtemp=[];      // 추가가능한 과목들 배열 만듬
+       let addid=0;         // 추가가능한 과목의 id도 각각 부여
       
 
-       for(let j=0;j<type1.length;j++){
+       // 여기서부터는 1,2,3순위 입력된 모든 과목들중에 aa에 있는 과목을 제외하고 추가로 신청 가능한 과목이 있는지 살펴봄.
+       for(let j=0;j<type1.length;j++){ // type1부터 살펴봄
 
         let i=0;
-        for(i=0;i<aa.length;i++)
+        for(i=0;i<aa.length;i++)    // aa는 현재 선택된 시간표 
         {
-        if(aa[i].data.classname===type1[j].classname)
+        if(aa[i].data.classname===type1[j].classname)   // 같은 과목은 동시 수강 못하므로 
                     break;
         if(!lookschedule(aa[i].data.classtime,type1[j].classtime))
-                break;
+                break;  // 시간표가 중복되면 동시 수강 못하므로 
                 
 
 
         }
 
-        if(i===aa.length){
-            addtemp.push({data:type1[j] ,id:addid});
+        if(i===aa.length){  // 최종적으로 수강 가능한 과목이면
+            addtemp.push({data:type1[j] ,id:addid});    // addtemp에 넣음.
             addid++;
 
         }
@@ -146,14 +168,7 @@ const GraphContainer=()=>{
         
         
                 }
-
-
-
     
-        
-        console.log('aaaaaa');
-        console.log(aa);
-        console.log(addtemp);
         setaddlist(addtemp);
           
       };
@@ -161,43 +176,36 @@ const GraphContainer=()=>{
       
       const Add=(id)=>{
 
-        let nid=TdrawList.length;
+        let nid=TdrawList.length;   // 현재 신청된 시간표의 과목 개수
 
         let aa=[];
-        if(TdrawList.length!==0)
-             aa=[...TdrawList,{id:nid, data:addlist[id].data}];
+        if(TdrawList.length!==0)    // 과목 개수가 0이 아니면
+             aa=[...TdrawList,{id:nid, data:addlist[id].data}]; // 기존 과목배열에 신규 과목 추가 
         else
-            aa.push({id:nid,data:addlist[id].data});
+            aa.push({id:nid,data:addlist[id].data});    // 현재 과목 개수가 0이면 그냥 추가 
 
 
 
-        let temp;
+        let temp=0;
         let bb=[];
+     
+      
         for(let i=0;i<addlist.length;i++){
+            if(addlist[i].id!==id){
+                if(addlist[i].data.classname!==addlist[id].data.classname){
+                    if(lookschedule(addlist[i].data.classtime,addlist[id].data.classtime))
+                        {
+                            bb.push({...addlist[i],id:temp});
+                            temp++;
+                        }
 
-            if(addlist[i].id===id)
-                {
-                    temp=addlist[i];
-                    break;
                 }
-
-        }
-
-        for(let i=0;i<addlist.length;i++){
-            
-            if(addlist[i].data.classname!==temp.data.classname){
-                if(lookschedule(addlist[i].data.classtime,temp.data.classtime))
-                    bb.push({...addlist[i],id:bb.length});
-
-
+          
             }
 
 
         }
-       
-        console.log('bbbbbbbbb');
-        console.log(bb);
-        console.log(aa);
+      
         setaddlist(bb);
         setTdrawList(aa);
 
@@ -228,6 +236,8 @@ useEffect(()=>makingDrawList(),[TdrawList]);
 useEffect(()=>finalprint(),[allList]);
 
     // 배열로 시간표 리스트만 넘기면됨 
+
+    // 얘는 TdrawList를 살펴보고 과목당 시간을 적절히 출력할 수 있게 숫자로 바꿔줌
     const makingDrawList=useCallback(()=>{
 
         let makingTable=[];
@@ -276,23 +286,25 @@ useEffect(()=>finalprint(),[allList]);
     // root,일반,leaf마다 가진 요소가 다름
     
 
+    // 핵심 알고리즘
+    // 모든걸 계산함
     const Calculate=()=>{
-
-     //   let finalrank=[]; //최종 개수 기반 순위
 
 
         const root1=composeTree('type1',Maintable);
         
         // 최대개수인 리프노드들을 찾아서 maxrootlist 배열에 저장되어있음.
+        // root의 maxrootlist는 배열 -> 배열의 원소하나는  
      
-
         // 트리를 만듬. (1순위 리스트)
-
         let treerootlist=[]; // 루트 트리들의 배열
 
         for(let i=0;i<root1.maxrootlist.length;i++){
 
             let treeroot=new mNode(root1.maxrootlist[i].list); // 하나의 루트트리를 만듬.
+            // root1.maxrootlist[i] 는 리프노드이고  리프노드.list에는 리프(자기)부터 루트 전까지 노드 배열이 들어가있음
+            //결국 mNode에 node리스트를 넘기는것.
+
             treerootlist.push(treeroot); // 배열에 넣음
             
             
@@ -321,10 +333,6 @@ useEffect(()=>finalprint(),[allList]);
             
             }
             
-
-
-
-
         }// for문 끝 
        
         // 모든 리스트가 만들어짐.
@@ -442,18 +450,7 @@ useEffect(()=>finalprint(),[allList]);
                     let x=treerootlist[a].classlist.concat(treerootlist[a].children[b].classlist);
                     let y=x.concat(treerootlist[a].children[b].children[c].classlist);
                     
-                    // let temp=[];
-                    // for(let z=0;z<y.length;z++){
-
-                    //     temp.push(y[z].data);
-                        
-
-                    // }   
-                    // if(temp.length>0){
-
-                    //     finaldata.push(temp);
-                    // }
-                    
+          
                     finaldata.push(y);
 
                 }
@@ -668,6 +665,7 @@ useEffect(()=>finalprint(),[allList]);
             previous={previous}
             Add={Add}
             addlist={addlist}
+            NextRoot={NextRoot}
             >
 
             </Graph>

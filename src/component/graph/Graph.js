@@ -255,7 +255,7 @@ bottom:200px;
 
 `;
 
-const Graph=({onCalculate,TdrawList,Delete,makingdrawList,Calculate,next,previous,addlist,Add})=>{
+const Graph=({onCalculate,TdrawList,Delete,makingdrawList,Calculate,next,previous,addlist,Add,NextRoot})=>{
 
 
 
@@ -275,6 +275,7 @@ const Graph=({onCalculate,TdrawList,Delete,makingdrawList,Calculate,next,previou
         <ListDelete onClick={()=>{Delete(n.id);} }>
             삭제
         </ListDelete>
+        <ListDelete onClick={()=>{NextRoot(n.id)}}>실패시 대안 루트</ListDelete>
         
         </OneList>))}
         
@@ -287,6 +288,7 @@ const Graph=({onCalculate,TdrawList,Delete,makingdrawList,Calculate,next,previou
                 <OneList>
                     <ListName>{`${n.data.classname} ${n.data.profess} `}</ListName>
                     <ListDelete onClick={()=>{Add(n.id)}}>신청</ListDelete>
+                  
                 </OneList>
 
 
