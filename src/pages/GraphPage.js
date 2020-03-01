@@ -2,7 +2,7 @@ import React from 'react';
 
 
 
-import GraphContainer from '../containers/graph/GraphContainer';
+import GraphContainer from '../containers/graph/GraphContainers';
 
 const GraphPage=()=>{
 

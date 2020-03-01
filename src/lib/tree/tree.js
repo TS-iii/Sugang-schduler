@@ -1,6 +1,3 @@
-
-
-
 export class Node {
 
     constructor(data){
@@ -118,17 +115,134 @@ export const insertTable=function(dst,src){
 };
 
 
-export const composeTree=function(t,table,banlist){
+export const composeTree=function(t,table,banlist,rootdata=null){
 
   
-    const root= new Node();
+    const root= new Node(rootdata);
 
     root.max=0;
     root.maxScore=0;
 
     root.finalTable=[];
+    
+    // //실패시 대안 루트 만들어줌.
+    // if(rootdata!==null){
+        
+    //     root.idlist=[];
+    //     root.idlist.push(rootdata.id);
+        
+    //     root.playlist=[]; // type1,2,3 가능한것들  
+
+    //     for(let i=0;i<table.type1.length;i++){
+                
+    //         let t=0;
+              
+    //         if(table.type1[i].id===rootdata.id)
+    //             continue;
+
+    //         for( let j=0;j<banlist.length;j++){
+
+    //             if(banlist[j].data.classname!==table.type1[i].classname)
+    //             {
+    //                 if(lookschedule(banlist[j].data.classtime,table.type1[i].classtime))
+    //                    {
+    //                         t++;
+
+    //                    }
+                    
+
+    //             }
 
 
+
+    //         }
+
+    //         if(t===banlist.length)
+    //             {
+    //                 root.insert(table.type1[i]);
+    //                 root.playlist.push(table.type1[i]);
+    //             }
+
+    //     }
+
+
+    //     for(let i=0;i<table.type2.length;i++){
+                
+    //         let t=0;
+              
+    //         if(table.type2[i].id===rootdata.id)
+    //             continue;
+
+    //         for( let j=0;j<banlist.length;j++){
+
+    //             if(banlist[j].data.classname!==table.type2[i].classname)
+    //             {
+    //                 if(lookschedule(banlist[j].data.classtime,table.type2[i].classtime))
+    //                    {
+    //                         t++;
+
+    //                    }
+                    
+
+    //             }
+
+
+
+    //         }
+
+    //         if(t===banlist.length)
+    //             {
+    //                 root.insert(table.type2[i]);
+    //                 root.playlist.push(table.type2[i]);
+    //             }
+    //     }
+
+
+    //     for(let i=0;i<table.type3.length;i++){
+                
+    //         let t=0;
+              
+    //         if(table.type3[i].id===rootdata.id)
+    //             continue;
+
+    //         for( let j=0;j<banlist.length;j++){
+
+    //             if(banlist[j].data.classname!==table.type3[i].classname)
+    //             {
+    //                 if(lookschedule(banlist[j].data.classtime,table.type3[i].classtime))
+    //                    {
+    //                         t++;
+
+    //                    }
+                    
+
+    //             }
+
+
+
+    //         }
+
+    //         if(t===banlist.length)
+    //             {   
+    //                 root.insert(table.type3[i]);
+    //                 root.playlist.push(table.type3[i]);
+    //             }
+
+    //     }
+
+
+    //     for(let i=0;i<root.children.length;i++){
+    
+    //         search(root.children[i],2,root,true);
+           
+    //     }
+
+
+
+    // } //rootdata!==null 끝 
+
+    
+    // else {
     if(t==='type1')
         {
     //루트 바로 밑 1번째 자식들 구성
@@ -239,7 +353,7 @@ export const composeTree=function(t,table,banlist){
           
         }
     
-
+            
 
         for(let i=0;i<root.children.length;i++){
     
@@ -248,8 +362,9 @@ export const composeTree=function(t,table,banlist){
         }
 
 
+    // }
+
     }
-    
 
     for(let i=0;i<root.finalTable.length;i++){
 
@@ -268,10 +383,12 @@ return root;
 
 };
 
-export const search=function(n,k,root){
+export const search=function(n,k,root,tf=false,banlist){
 
  
     let num=0;
+
+    
 
     for(let i=n.num+1;i<n.adault.children.length;i++){
 

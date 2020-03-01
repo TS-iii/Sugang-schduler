@@ -153,9 +153,6 @@ const DataList=React.memo(({dataes,onRemove})=>(
 }
   
  
-
-
-    
     </DataBlock>
 
    
@@ -240,6 +237,7 @@ const WriteSchedule=({onFinal,onCalculate})=>{
             // let table={type1:[],type2:[],type3:[]};
 
             
+            let id=0;
           
         
        
@@ -383,9 +381,10 @@ const WriteSchedule=({onFinal,onCalculate})=>{
                 type='type2';
             else if(imp==='3')
                 type='type3';
-    
-                onFinal({   type,classname,classtime,profess,classscore  });
-            
+                            
+                onFinal({   type,classname,classtime,profess,classscore ,id  });
+                
+                id++;
             // table[type].push({classname,classtime,profess,classscore});
 
 

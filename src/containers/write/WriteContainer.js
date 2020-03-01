@@ -44,7 +44,7 @@ history.push('/graph');
 
 };
 
-const onFinal=({type,classname,classtime,profess,classscore})=>{
+const onFinal=({type,classname,classtime,profess,classscore,id})=>{
 
         
 
@@ -56,6 +56,7 @@ const onFinal=({type,classname,classtime,profess,classscore})=>{
                   classtime,
                   profess,
                   classscore,
+                  id,
                  }
                 
             })

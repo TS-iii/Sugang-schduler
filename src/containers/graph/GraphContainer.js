@@ -6,8 +6,9 @@ import Graph from '../../component/graph/Graph';
 
 import {register} from '../../modules/write';
 
-import Node ,{lookschedule,insertTable,composeTree ,search} from '../../lib/tree/tree';
-import { tsConstructorType } from '../../../../../../../AppData/Local/Microsoft/TypeScript/3.7/node_modules/@babel/types/lib/index';
+ import Node ,{lookschedule,composeTree } from '../../lib/tree/tree';
+
+
 
 
 // 안겹친다는 가정이 필요
@@ -284,8 +285,7 @@ useEffect(()=>finalprint(),[allList]);
 
     // node 클래스
     // root,일반,leaf마다 가진 요소가 다름
-    
-
+  
     // 핵심 알고리즘
     // 모든걸 계산함
     const Calculate=()=>{
@@ -296,6 +296,8 @@ useEffect(()=>finalprint(),[allList]);
         // 최대개수인 리프노드들을 찾아서 maxrootlist 배열에 저장되어있음.
         // root의 maxrootlist는 배열 -> 배열의 원소하나는  
      
+     
+
         // 트리를 만듬. (1순위 리스트)
         let treerootlist=[]; // 루트 트리들의 배열
 
@@ -537,6 +539,11 @@ useEffect(()=>finalprint(),[allList]);
     //0반환: 둘이 같음
     //-1반환:b가 더큼
     const compare=(a,b)=>{
+
+        if(a.classlist[0].deep > b.classlist[0].deep)
+            return 1;
+        if(a.classlist[0].deep< b.classlist[0].deep)
+            return -1;
 
         if(a.children.length===0)
         {
