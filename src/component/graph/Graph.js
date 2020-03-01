@@ -201,9 +201,16 @@ font-weight:bold;
 background:${palette.gray[7]};
 color:white;
 
-
 `;
 
+const ListFail=styled.button`
+
+font-weight:bold;
+backgrund:${palette.gray[9]};
+color:red;
+
+
+`;
 
 const Element=({time})=>(
 
@@ -220,7 +227,7 @@ const Element=({time})=>(
 
 const arr=[9,10,11,12,13,14,15,16,17,18,19,20,21];
 
-const drawlist=[{x:43,y:9,ycolor:3.5,color:"red",text:"hi"}];   // 요소 1개당 x,y,ycolor,text가 정의되어있음
+// const drawlist=[{x:43,y:9,ycolor:3.5,color:"red",text:"hi"}];   // 요소 1개당 x,y,ycolor,text가 정의되어있음
 
 const DrawPosition=({x,y,ycolor,color,text})=>(
 
@@ -255,7 +262,7 @@ bottom:200px;
 
 `;
 
-const Graph=({onCalculate,TdrawList,Delete,makingdrawList,Calculate,next,previous,addlist,Add,NextRoot})=>{
+const Graph=({TdrawList,Delete,makingdrawList,Calculate,next,previous,addlist,Add,NextRoot,click,maindata})=>{
 
 
 
@@ -263,7 +270,6 @@ const Graph=({onCalculate,TdrawList,Delete,makingdrawList,Calculate,next,previou
        
     <BackTemplate>
          <button onClick={Calculate} >버튼</button>
-         <button onClick={onCalculate} >버튼on</button>
          <button onClick={next}>다음</button>
          <button onClick={previous}>이전</button>
         <ListTemplate>
@@ -271,35 +277,40 @@ const Graph=({onCalculate,TdrawList,Delete,makingdrawList,Calculate,next,previou
 
     {TdrawList.map((n)=>(
     <OneList>
-        <ListName>{`${n.data.classname}  ${n.data.profess}`}</ListName>
+        <ListName>{`${n.classname}  ${n.profess}`}</ListName>
         <ListDelete onClick={()=>{Delete(n.id);} }>
             삭제
         </ListDelete>
-        <ListDelete onClick={()=>{NextRoot(n.id)}}>실패시 대안 루트</ListDelete>
-        
-        </OneList>))}
-        
-        <BottomList>
-        <div>---------신청 가능한 목록들-------</div>
-        {   
-            
-            addlist.map((n)=>(
 
+        {
+        maindata.find(c=>c.id===n.id) ? <ListDelete onClick={()=>{NextRoot(n.id)}}>실패시 대안 루트</ListDelete> :
+        ""
+        }
+        
+        </OneList>)
+        
+        
+        
+        
+        
+        )}
+
+        {   click.map((n)=>(
                 <OneList>
-                    <ListName>{`${n.data.classname} ${n.data.profess} `}</ListName>
-                    <ListDelete onClick={()=>{Add(n.id)}}>신청</ListDelete>
-                  
+                       <ListName>{`${n.classname}  ${n.profess}`}</ListName>
+                       <ListDelete onClick={()=>{Delete(n.id);} }>
+            삭제
+        </ListDelete>
+
+        <ListDelete onClick={()=>{NextRoot(n.id)}}>실패 취소</ListDelete>
                 </OneList>
 
 
-            ))
-
-
+        ))
 
 
         }
         
-        </BottomList>
 
 
         </ListTemplate>
