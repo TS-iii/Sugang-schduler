@@ -353,11 +353,23 @@ const WriteSchedule=({onFinal,onCalculate})=>{
 
                                                     if(classtime[i+1]==='.')
                                                         {  n=3;
-                                                            schedule[t].push(((classtime[i]-'0')*2)+1);
+                                                            if(classtime[i+2]==='0')
+                                                                {
+                                                                schedule[t].push(((classtime[i]-'0')*2));
+                                                                schedule[t].push(((classtime[i]-'0')*2)+1);
+                                                                }
+                                                            else    
+                                                                {
+                                                                    schedule[t].push(((classtime[i]-'0')*2)+1);
+                                                                    schedule[t].push(((classtime[i]-'0')*2)+2);
+                                                                }
                                                             }
                                                     else
-                                                        schedule[t].push((classtime[i]-'0')*2);
-                                                }
+                                                        {
+                                                            schedule[t].push(((classtime[i]-'0')*2)+1);
+                                                            schedule[t].push(((classtime[i]-'0')*2)+1);
+                                                        }
+                                                    }
 
                                             }
 
@@ -475,120 +487,5 @@ const WriteSchedule=({onFinal,onCalculate})=>{
 
 
 export default WriteSchedule;
-
-
-
-/*
-
-분석해야되는 데이터
-[객체1,객체2,...]
-
-양식
-{
-과목이름:
-교수이름:
-
-중요도:
-학점:String
-시간:
-
-}
-
-데이터 전처리-해야하는일
-
-1. 중요도로 데이터를 나눔
-중요도1 : [,,,]
-중요도2: [,,,]
-중요도3 : [,,,]
-
-2.같은 중요도에서 동일 과목 확인(시간은 다른데 과목은 동일)
-(링크드리스트형태로 표현?)
-
-
-시간표 객체
-{
-
-신청된 총 학점수:
-현재 시간표에 들어있는 과목 객체 배열: [객체1,]    
-월:[boolean,],
-화:[],
-수:[],
-목:[],
-금:[],
-
-}
-
-
-
---------------------------------------------
-요일 요소 안에 배열은 크기가 30   
-첫번째 0은 '2'를 뜻하고
-마지막 29는 '30'을 뜻함   
-
-월 A 라면 시간표->월->0,1,2 번 인덱스 비었는지 확인
-월 1.5,2,2.5라면 2를 곱해서 3,4,5로 만든다음 -2를 해서  1,2,3 번 인덱스가 비었는지 확인
-(비었으면 false, 찼으면 true)
-
-
-
----------------------------------------
-배열에 객체를 저장
-
-// 시간표 비교해서 true,false 반환
-export compare = function(a){  
-
-
-    
-
-
-} ;
-
-
-// 목록에 시간표 추가함  
- 
-
-//시간표 삭제
-
-export delete = function(a){
-
-
-
-
-}
-
-
-
-
------------------------------------
-
-        
-    const onResult=()=>{
-
-        // localData 는 문자열 저장된 배열
-        
-        //학점은 1에서 6까지 있는걸로
-
-        let splitData=localData.split('/'); 
-        //중요도/과목명/시간/교수이름/학점
-                
-        let imp=splitData[0].trim(); // 1~3 앞뒤 공백 제거
-        let classname=splitData[1].trim();
-
-        let classtime=splitData[2].trim();
-        
-
-        let profess=splitData[3].trim();
-        let classScore=splitData[4].trim(); // 1~6학점
-        
-              
-            return <Graph props={localData} />
-
-    };
-
-
-
-
-*/
-
 
 

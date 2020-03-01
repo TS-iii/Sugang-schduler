@@ -29,6 +29,8 @@ const TimeTemplate=styled.div`
 
 width:70%;
 height:100%;
+
+
 background:${palette.gray[5]};
 
 
@@ -37,6 +39,8 @@ const TimeTable=styled.div`
 
  width:80%;
  height:100%;
+
+
 
 background:${palette.gray[5]};
 
@@ -172,6 +176,42 @@ background:#D0F5A9;
 display:flex;
 flex-direction:column;
 
+overflow:scroll;
+
+
+`;
+
+const ListList=styled.div`
+font-weight:bold;
+display:flex;
+flex-direction:column;
+&:hover {
+    background: ${palette.gray[6]};
+  }
+
+
+.n {
+
+background:red;
+color:white;
+
+}
+
+.worldt{
+
+    background:blue;
+    color:white;
+
+}
+
+.title{
+
+
+    background:black;
+    color:white;
+
+}
+
 
 `;
 
@@ -262,25 +302,109 @@ bottom:200px;
 
 `;
 
-const Graph=({TdrawList,Delete,makingdrawList,Calculate,next,previous,addlist,Add,NextRoot,click,maindata})=>{
+const Graph=({makingdrawList,NextRoot,click,maindata,allList,makingDrawList,nownum,world})=>{
 
 
 
     return (
        
     <BackTemplate>
-         <button onClick={Calculate} >버튼</button>
-         <button onClick={next}>다음</button>
-         <button onClick={previous}>이전</button>
+
+
         <ListTemplate>
 
+{
+     
+     world===false ? 
 
-    {TdrawList.map((n)=>(
+
+
+allList.map((list,index)=>(      
+<ListList onClick={()=>makingDrawList(list,index)}>
+
+{
+index===nownum? <div className="n">{`${index+1}순위 추천 시간표(선택)`} </div> : <div>{`${index+1}순위 추천 시간표`}</div> 
+}
+
+{
+    index!==nownum  ? list.map((n)=>(  <OneList>      <ListName>{`${n.classname}  ${n.profess} ${n.classscore}학점 `}</ListName>  </OneList>)) 
+                 :    list.map((n)=>(
+    <OneList>
+         <ListName>{`${n.classname}  ${n.profess} ${n.classscore}학점 `}</ListName>
+     { maindata.find(c=>c.id===n.id) ? <ListDelete onClick={()=>{NextRoot(n.id)}}>실패시 대안 시간표</ListDelete> : ""  }
+    </OneList>))
+    
+}
+
+<div>--------------------------------</div>
+</ListList>
+)) 
+
+
+//world가 true면 
+: 
+    <>
+    <ListList>
+
+        <div className="title">****선택한 시간표 ****</div>
+        {
+        maindata.map((n)=>(
+            <OneList>  
+             <ListName>{`${n.classname}  ${n.profess} ${n.classscore}학점 `}</ListName>
+             <ListDelete onClick={()=>{NextRoot(n.id)}}>실패시 대안 시간표</ListDelete> 
+             </OneList>
+        ))
+        }
+        {
+        click.map((n)=>(
+            <OneList>
+          <ListName>{`${n.classname}  ${n.profess} ${n.classscore}학점 `}</ListName>
+            <ListDelete onClick={()=>{NextRoot(n.id)}}>실패 취소</ListDelete>
+            </OneList>
+        ))
+        
+        } 
+           <div>--------------------</div>
+     <div className="title">***선택한 시간표중 과목 일부가 실패했을때 대안 시간표***</div>
+     </ListList>
+   
+     {
+   allList.map((list,index)=>(
+
+      
+    <ListList onClick={()=>makingDrawList(list,index)}>
+        {index===nownum? <div className="n">{`${index+1}순위 추천 시간표(선택)`} </div> : <div className="worldt">{`${index+1}순위 추천 시간표`}</div> }
+    {list.map((n)=>(
+        <OneList>
+            
+            <ListName>{`${n.classname}  ${n.profess} ${n.classscore}학점`}</ListName>
+    
+        </OneList>
+        
+    
+    )) 
+    
+    
+    
+
+    }
+    
+    
+    
+    <div>--------------------------------</div>
+    </ListList>
+    ))}
+    </>
+
+
+}
+
+
+     </ListTemplate>
+    {/* {TdrawList.map((n)=>(
     <OneList>
         <ListName>{`${n.classname}  ${n.profess}`}</ListName>
-        <ListDelete onClick={()=>{Delete(n.id);} }>
-            삭제
-        </ListDelete>
+    
 
         {
         maindata.find(c=>c.id===n.id) ? <ListDelete onClick={()=>{NextRoot(n.id)}}>실패시 대안 루트</ListDelete> :
@@ -293,14 +417,12 @@ const Graph=({TdrawList,Delete,makingdrawList,Calculate,next,previous,addlist,Ad
         
         
         
-        )}
+        )}  
 
         {   click.map((n)=>(
                 <OneList>
                        <ListName>{`${n.classname}  ${n.profess}`}</ListName>
-                       <ListDelete onClick={()=>{Delete(n.id);} }>
-            삭제
-        </ListDelete>
+          
 
         <ListDelete onClick={()=>{NextRoot(n.id)}}>실패 취소</ListDelete>
                 </OneList>
@@ -310,14 +432,14 @@ const Graph=({TdrawList,Delete,makingdrawList,Calculate,next,previous,addlist,Ad
 
 
         }
-        
+         */}
+     
 
-
-        </ListTemplate>
+{/* 
+        </ListTemplate> */}
 
 
         <TimeTemplate>
-        {/* <button onClick={onCalculate}>버튼</button> */}
         <TimeTable>
         
         <RowZero>
