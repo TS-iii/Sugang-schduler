@@ -9,6 +9,8 @@ const MainPage=()=>{
 
         <MainTemplate></MainTemplate>
 
+
+        
     );
 
 
