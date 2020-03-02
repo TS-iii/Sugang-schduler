@@ -243,14 +243,7 @@ color:white;
 
 `;
 
-const ListFail=styled.button`
 
-font-weight:bold;
-backgrund:${palette.gray[9]};
-color:red;
-
-
-`;
 
 const Element=({time})=>(
 
@@ -290,17 +283,6 @@ const DrawPosition=({x,y,ycolor,color,text})=>(
 
 //뒤로가기 -> 그냥 뒤로감
 
-
-const BottomList=styled.div`
-
-position:absolute;
-
-bottom:200px;
-
-
-
-
-`;
 
 const Graph=({makingdrawList,NextRoot,click,maindata,allList,makingDrawList,nownum,world})=>{
 
@@ -401,42 +383,7 @@ index===nownum? <div className="n">{`${index+1}순위 추천 시간표(선택)`}
 
 
      </ListTemplate>
-    {/* {TdrawList.map((n)=>(
-    <OneList>
-        <ListName>{`${n.classname}  ${n.profess}`}</ListName>
-    
-
-        {
-        maindata.find(c=>c.id===n.id) ? <ListDelete onClick={()=>{NextRoot(n.id)}}>실패시 대안 루트</ListDelete> :
-        ""
-        }
-        
-        </OneList>)
-        
-        
-        
-        
-        
-        )}  
-
-        {   click.map((n)=>(
-                <OneList>
-                       <ListName>{`${n.classname}  ${n.profess}`}</ListName>
-          
-
-        <ListDelete onClick={()=>{NextRoot(n.id)}}>실패 취소</ListDelete>
-                </OneList>
-
-
-        ))
-
-
-        }
-         */}
-     
-
-{/* 
-        </ListTemplate> */}
+ 
 
 
         <TimeTemplate>

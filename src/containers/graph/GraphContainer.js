@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux';
 
 import Graph from '../../component/graph/Graph';
 
-import  { mainTree,lookschedule} from '../../lib/tree/tree';
+import  { mainTree} from '../../lib/tree/tree';
 
 
 

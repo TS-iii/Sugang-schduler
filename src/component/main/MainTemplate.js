@@ -98,7 +98,7 @@ const MainTemplate=()=>{
     return (
         
         <BackTemplate>    
-          <MainTitle>수강신청 스케줄러</MainTitle>
+          <MainTitle>아주대학교 수강신청 스케줄러</MainTitle>
       
 
           <ContentBody>
@@ -114,6 +114,9 @@ const MainTemplate=()=>{
             <ReadMe>시간표 짜는것을 도와드립니다. 한번 이용해 보세요 ^^ 껄껄껄 <br/>
             1,2,3지망을 정해서 각각 수강과목들을 입력하면 우선순위가 가장 높은 과목이 최대한 많이 수강될 수 있게 시간표를 추천해드립니다. <br/>
             계획한 시간표가 실패할경우 짤 수 있는 대안 시간표도 보여드려요 :D <br/>
+            
+            
+
             </ReadMe>
 
 

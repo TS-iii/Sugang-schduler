@@ -44,7 +44,7 @@ history.push('/graph');
 
 };
 
-const onFinal=({type,classname,classtime,profess,classscore,id})=>{
+const onFinal=({type,classname,classtime,profess,classscore,id,imp})=>{
 
         
 
@@ -52,6 +52,7 @@ const onFinal=({type,classname,classtime,profess,classscore,id})=>{
             register({
                 form:type,
                 value:{
+                  type:imp,
                   classname,
                   classtime,
                   profess,

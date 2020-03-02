@@ -55,6 +55,13 @@ flex-direction:column;
  align-items:center;
  justify-content:center;
 
+ .m{
+
+    color:red;
+    font-weight:bold;
+
+ }
+
 `;
 
 
@@ -233,8 +240,6 @@ const WriteSchedule=({onFinal,onCalculate})=>{
 
     const onResult=()=>{
 
-            // localData 는 문자열 저장된 배열
-            // let table={type1:[],type2:[],type3:[]};
 
             
             let id=0;
@@ -252,10 +257,7 @@ const WriteSchedule=({onFinal,onCalculate})=>{
                 let profess=splitData[3].trim();    // 교수이름
                 let classscore=(splitData[4].trim())*1; //학점 , 숫자로 형변환
 
-                // let totalInfo={
-                //     imp,classname,classtime,profess,classscore
-                // }
-                
+       
                                     let schedule={
 
                                         keyword:[],
@@ -393,8 +395,10 @@ const WriteSchedule=({onFinal,onCalculate})=>{
                 type='type2';
             else if(imp==='3')
                 type='type3';
+
+                imp=Number(imp);
                             
-                onFinal({   type,classname,classtime,profess,classscore ,id  });
+                onFinal({   type,classname,classtime,profess,classscore ,id ,imp });
                 
                 id++;
             // table[type].push({classname,classtime,profess,classscore});
@@ -425,26 +429,26 @@ const WriteSchedule=({onFinal,onCalculate})=>{
         <WriteList>
                 
             <div className="explain">
+            <div className="m">중요도/과목/시간/교수이름/학점 으로 입력</div>
+            *중요도는 1,2,3으로 분류됨<br/>
+            1:꼭 수강신청 해야하는 과목<br/>
+            2: 1번 보단 덜 중요한 과목 <br/>
+            3: 1,2번보다 덜 중요한 과목<br/><br/>
+
+            *동일한 과목명을 두개이상 쓸 때는 반드시 이름을 똑같이 적을것.<br/> 
                 -------------------------------------<br/>
+                [입력예시]<br/>
+    
                  1/전자장론/월A 수A/박용배/3<br/>
                 1/알고리즘/화E 금E/위규범/ 3<br/>
                 1/알고리즘/월D 목D/위규범/ 3<br/>
-                1/오픈소스SW입문/금 5.5 6.5 7.5 /안병헌/ 3<br/>
+                2/오픈소스SW입문/금 5.5 6.5 7.5 /안병헌/ 3<br/>
                 1 /도메인분석 및 sw설계 / 월B 목B/ 이정태 / 4<br/>
                 1 /도메인분석 및 sw설계 / 월D 목D/이정태/  4<br/>
-
-                1 /창의소프트웨어입문 /월B 목B/이환용/  1<br/>
-                -------------------------------------<br/><br/><br/>
-            중요도/과목명/시간/교수이름/학점 으로 입력 <br/>
-           **************************************************************<br/>
-            중요도: 1,2,3 <br/>
-            [1: 꼭 수강신청 해야함]  [2: 1보단 덜함]  [3: 2보단 덜함] <br />
-            ************************************************************* <br/>
-            ex) 중요도 1, 과목명:전자회로 시간:월A 수A 교수이름: 홍길동 학점:3학점 이면 <br/>
-            1/전자회로/월A 수A / 홍길동/3   입력 <br/>
-            <br/>
-         
-
+                3 /창의소프트웨어입문 /월B 목B/이환용/  1<br/>
+                -------------------------------------<br/>
+            
+        
             
             </div>
 

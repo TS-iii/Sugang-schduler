@@ -149,29 +149,19 @@ export const mainTree=(table,banlist,specialbanlist)=>{
 
     const classroot=new classTree();
 
-    // console.log("0을 composetree한테 보냄");
 
     composeTree(classroot,table,banlist,0,specialbanlist);
     
-    // console.log("컴포스트리 끝남 ");
-    //이제 비교
-    // console.log(classroot);
 
     comparemain(classroot);
-    
-    // console.log("comparemain끝남");
+
     
     analyze(classroot);
 
-    // console.log("analyze 끝남");
-
-    // console.log(fflist);
 
     fflist=uniq(fflist);
 
-    // console.log("uniq 끝남");
 
-    // console.log(fflist);
 
     return fflist;
 
@@ -361,7 +351,8 @@ export const compare=function(a,b){
         return -1;
 
     if(a.deep===b.deep){
-
+         
+        
         if(a.children.length===0 && b.children.length===0)
             return 0;
         else if(a.children.length===0 && b.children.length!==0)
@@ -369,7 +360,12 @@ export const compare=function(a,b){
         else if(a.children.length!==0 && b.children.length===0)
             return 1;
         else
-            {
+            {   
+                if(a.children[0].type<b.children[0].type)
+                    return 1;
+                else if(a.children[0].type>b.children[0].type)
+                    return -1;
+
                 if(a.childinfo.max>b.childinfo.max)
                     return 1;
                 if(a.childinfo.max<b.childinfo.max)
@@ -402,17 +398,10 @@ export const composeTree=function(classroot,table,banlist,index,specialbanlist){
 
      
 
-    
-        // console.log("composeTree에서 exbanlist로 들어감");
-        // console.log("banlist는");
-        // console.log(banlist);
+
 
         if(exbanlist(typer[index],table,banlist,root,specialbanlist)){
-          
-            
-                // console.log("rootdeep:" + root.deep);
-                // console.log("maxrootlist:" + root.maxrootlist.length);
-                // console.log(root.memberlist);
+
 
              classroot.insertinfo(root.deep,root.maxrootlist.length);
          
@@ -472,10 +461,6 @@ export const composeTree=function(classroot,table,banlist,index,specialbanlist){
 
 // type과 table에서 banlist를 주면 root에 알아서 목록을 집어넣어준다 
 export const exbanlist=(type,table,banlist,root,specialbanlist)=>{
-
-    // console.log("exbanlist 내부 첫줄임");
-    // console.log("banlist는");
-    // console.log(banlist);
 
    
     for(let i=0;i<table[type].length;i++){
